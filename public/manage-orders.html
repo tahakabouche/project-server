@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script type="module" src="js/pages/manage-orders.js"></script>
+    <title>Orders</title>
+  </head>
+  <body class="admin-dashbord-body">
+    
+    <side-bar></side-bar>
+
+    <div class="dashboard-main-content">
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>User</th>
+            <th>Date</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Province</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="orders-container"></tbody>
+      </table>
+    </div>
+
+    <dialog class="edit-order-dialog"> 
+      
+    </dialog>
+
+    <confirmation-dialog></confirmation-dialog>
+    <message-dialog></message-dialog>
+  </body>
+</html>

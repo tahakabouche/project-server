@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="js/pages/filter-script.js" defer></script>
+    <script type="module" src="js/pages/main-page.js" defer></script>
+  </head>
+  <body class="home-page-body">
+  
+      <!-- header-->
+      <my-header></my-header>
+
+      <div class="home-page-sub-container">
+        <!-- filters-->
+        <my-filter></my-filter>
+        <!-- product-list-->
+        <div>
+          <div style="padding: 2rem 0; display: flex; justify-content: end; align-items: center; gap: 2rem;">
+            <p>Showing <span class="first-doc"></span>-<span class="last-doc"></span> of <span class="doc-count"></span></p>
+            <button class="filter-menu-btn">
+                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M200-160v-280h-80v-80h240v80h-80v280h-80Zm0-440v-200h80v200h-80Zm160 0v-80h80v-120h80v120h80v80H360Zm80 440v-360h80v360h-80Zm240 0v-120h-80v-80h240v80h-80v120h-80Zm0-280v-360h80v360h-80Z"/></svg>
+            </button>
+          </div>
+          <div class="product-list-container">
+          
+            <!-- product-cards-->
+          </div>
+        </div>    
+      </div>
+
+     
+  </body>
+</html>

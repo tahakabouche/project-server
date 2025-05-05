@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script type="module" src="js/pages/manage-products.js" defer></script>
+    
+    <title>Admin</title>
+  </head>
+  <body class="admin-dashbord-body">
+    <side-bar></side-bar>
+
+    <div class="dashboard-main-content">
+
+      <div class="manage-products-action-div">
+        <p>Showing <span class="first-doc"></span>-<span class="last-doc"></span> of <span class="doc-count"></span></p>
+         <div class="flex-row-div">
+            <button class="btn-square-secondary manage-product-btn" id="filter-dashboard-btn">Filter</button>
+            <a href="/add-product.html">
+              <button class="btn-square-secondary manage-product-btn" id="add-product-dashboard-btn">
+                Add Product
+              </button>
+            </a>
+         </div>   
+      </div>
+
+      <div class="product-list-container"></div>
+
+      <dialog id="filter-dialog"><my-filter></my-filter></dialog>
+    </div>
+
+    <script>
+      window.addEventListener("submit", function (e) {
+        e.preventDefault();
+        console.log("Global submit prevented");
+        return false;
+      });
+    </script>
+  </body>
+</html>

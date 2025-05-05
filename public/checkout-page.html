@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout</title>
+    <script type="module" src="js/pages/checkout-page.js"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body class="checkout-page-body">
+    <my-header></my-header>
+    <div class="checkout-page-sub-container">
+      <div class="billing-details-container">
+        <h2>Billing Details</h2>
+
+        <div class="name-container billing-details-sub-div">
+          <div>
+            <p class="checkout-page-label">First name</p>
+            <input class="sign-input" type="text" id="first-name-input" />
+          </div>
+          <div>
+            <p class="checkout-page-label">Last name</p>
+            <input class="sign-input" type="text" id="last-name-input" />
+          </div>
+        </div>
+
+        <div class="email-container billing-details-sub-div">
+          <p class="checkout-page-label">Email</p>
+          <input class="sign-input" type="email" id="email-input"/>
+        </div>
+
+        <div class="billing-details-sub-div">
+          <p class="checkout-page-label">State/Wilaya</p>
+          <state-dropdown-menu></state-dropdown-menu>
+        </div>
+
+        <div class="adresse-container billing-details-sub-div">
+          <p class="checkout-page-label">Street Addresse</p>
+          <input class="sign-input" type="text" id="address-input"/>
+        </div>
+
+        <div class="phone-number-container billing-details-sub-div">
+          <p class="checkout-page-label">Phone number</p>
+          <input class="sign-input" type="text" id="phone-input" />
+        </div>
+      </div>
+      <div class="order-summary-container">
+        <h2>Your order</h2>
+
+        <div class="order-items-container">
+          <table class="order-summary-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <td>Subtotal</td>
+              </tr>
+            </thead>
+            <tbody class="order-items-sub-container">
+
+            </tbody>
+            <tfoot>
+                <tr class="order-subtotal">
+                  <th>Subtotal</th>
+                  <td >1515</td>
+                </tr>
+                <tr class="shipping-options-row">
+                
+                    <th>Shipping</th>
+                    <td class="order-shipping-options">
+                      Enter your address to view shipping options.
+                    </td> 
+                  
+                </tr>
+                <tr class="order-total">
+                  <th>Total</th>
+                  <td >1515</td>
+                </tr>
+            </tfoot>
+           </table>
+          </div>
+
+          <div class="payment-option-container">
+            <div class="radio-item">
+              <input type="radio" id="cash-on-delivery" checked>
+              <label for="cash-on-delivery"><span class="radio-control"></span><h4>Cash on delivery</h4></label>
+            </div>
+            <p>Pay with cash upon delivery</p>
+          </div>
+        
+          <button class="btn btn--primary place-order-btn">Place Order</button>
+        </div>
+       
+      </div>
+    </div>
+    <message-dialog></message-dialog>
+  </body>
+</html>

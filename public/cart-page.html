@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Cart</title>
+    <script type="module" src="js/pages/cart-page.js" defer></script>
+  </head>
+  <body class="cart-page-body">
+    <div class="cart-page">
+      <my-header></my-header>
+      <div>
+        <h1 style="font-family: 'Integral CF'; margin: 2.4rem 0">Your cart</h1>
+        <div class="cart-page-sub-div">
+          <div class="cart"></div>
+
+          <div class="cart-totals">
+            <h2>Cart totals</h2>
+             <table class="checkout-table">
+              <tbody>
+                <tr>
+                  <th>Subtotal</th>
+                  <td id="sub-total"></td>
+                </tr>
+                <tr>
+                  <th>Shipping</th>
+                  <td>Enter your address to view shipping cost.
+                  </td>
+                </tr>
+                <tr>
+                  <th>Total</th>
+                  <td id="total"></td>
+                </tr>
+              </tbody>
+             </table>
+             <a href="checkout-page.html">
+               <button class="btn btn--primary" style="width: 100%; ">Go to checkout</button>
+             </a>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/styles.css" />
+    <script type="module" src="js/pages/add-product.js" defer></script>
+
+    <title>Admin</title>
+  </head>
+  <body class="admin-dashbord-body">
+     <side-bar></side-bar>
+    <div class="dashboard-main-content">
+      <!-- <button class="btn-square" id="add-product">Add Product</button> -->
+      <div class="add-product-grid">
+        <div class="product-info-sub-grid sub-grid">
+          <h2>Product Info</h2>
+          <div class="dashboard-sub-container">
+            <p>Product Name</p>
+            <input type="text" id="add-product-name" class="sign-input" />
+          </div>
+          <div class="dashboard-sub-container">
+            <p>Product Price</p>
+            <input type="number" id="add-product-price" class="sign-input" />
+          </div>
+          <div class="dashboard-sub-container">
+            <p>Category</p>
+            <dropdown-menu></dropdown-menu>
+          </div>
+        </div>
+
+        <div class="product-description-sub-grid sub-grid">
+          <h2>Description</h2>
+          <textarea
+            class="sign-input"
+            id="product-description-input"
+          ></textarea>
+        </div>
+
+
+        <div class="add-photo-sub-grid sub-grid">
+          <h2>Product Images</h2>
+          <image-uploader></image-uploader>
+        </div>
+
+        <div class="quantity-sub-grid sub-grid">
+          <h2>Quantity</h2>
+          <div class="product-quantity-div">
+            <div class="dashboard-sub-container">
+              <p>X-Small</p>
+              <input
+                type="text"
+                class="sign-input clothing-size-quantity"
+                id="x-small-quantity"
+              />
+            </div>
+            <div class="dashboard-sub-container">
+              <p>Small</p>
+              <input
+                type="text"
+                class="sign-input clothing-size-quantity"
+                id="small-quantity"
+              />
+            </div>
+            <div class="dashboard-sub-container">
+              <p>Medium</p>
+              <input
+                type="text"
+                class="sign-input clothing-size-quantity"
+                id="medium-quantity"
+              />
+            </div>
+            <div class="dashboard-sub-container">
+              <p>Large</p>
+              <input
+                type="text"
+                class="sign-input clothing-size-quantity"
+                id="large-quantity"
+              />
+            </div>
+            <div class="dashboard-sub-container">
+              <p>X-Large</p>
+              <input
+                type="text"
+                class="sign-input clothing-size-quantity"
+                id="x-large-quantity"
+              />
+            </div>
+            <div class="dashboard-sub-container">
+              <p>XX-Large</p>
+              <input
+                type="text"
+                class="sign-input clothing-size-quantity"
+                id="xx-large-quantity"
+              />
+            </div>
+            <div class="dashboard-sub-container">
+              <p>3X-Large</p>
+              <input
+                type="text"
+                class="sign-input clothing-size-quantity"
+                id="3x-large-quantity"
+              />
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <button class="btn-square" id="add-product-btn" type="button">
+        Add Product
+      </button>
+    </div>
+
+    
+    <message-dialog></message-dialog>
+   
+    <script>
+      window.addEventListener("submit", function (e) {
+        e.preventDefault();
+        console.log("Global submit prevented");
+        return false;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script type="module" src="js/pages/login.js" defer></script>
+    <title>Login</title>
+  </head>
+  <body style="font-family: 'Inter';" class="sign-page-body">
+    <h1 class="sign-page-logo logo">TAHA</h1>
+    <div class="sign-container">
+      <div class="sign-conatiner-sub-div sign-flex-sub-div">
+        <h1 style="font-family: 'Satoshi'; margin-bottom: 0.9rem; font-size: 4rem;">Login to Account</h1>
+        <p>please enter your email and password to continue</p>
+      </div>
+      <div class="sign-conatiner-sub-div sign-flex-sub-div">
+        <label for="sign-password">Email Address</label>
+        <input
+          type="text"
+          class="sign-input"
+          name="login-email"
+          id="login-email"
+        />
+      </div>
+      <div class="sign-conatiner-sub-div sign-flex-sub-div">
+        <label for="login-password">Password</label>
+        <input
+          type="password"
+          class="sign-input"
+          name="login-password"
+          id="login-password"
+        />
+        <p class="sign-error"></p>
+      </div>
+      
+      <div class="sign-conatiner-sub-div sign-flex-sub-div">
+        <button style="margin-bottom: 1rem;" class="btn btn--primary sign-btn" id="sign-in-btn">Sign in</button>
+        <p>Don't have an account? <a href="sign-up.html" class="sign-link">Create Account</a></p>
+        <p><a href="" class="sign-link">Forgot Password?</a></p>
+      </div>
+    </div>
+  </body>
+</html>
