@@ -4,10 +4,10 @@
  * API communication module for handling AJAX requests
  */
 
-import { getToken } from './auth.js';
+import { getToken } from "./auth.js";
 
 // Base API URL - adjust based on your environment
-const BASE_URL = 'http://localhost:5000/api/v1';
+const BASE_URL = "https://project-server-1-1b3z.onrender.com/api/v1";
 
 /**
  * Make an authenticated API request
@@ -16,43 +16,44 @@ const BASE_URL = 'http://localhost:5000/api/v1';
  * @returns {Promise} - Promise resolving to response data
  */
 export async function apiRequest(endpoint, options = {}) {
-  const url = `${BASE_URL}/${endpoint.replace(/^\//, '')}`;
-  
+  const url = `${BASE_URL}/${endpoint.replace(/^\//, "")}`;
+
   // Default headers
   const headers = {
-    ...(options.body instanceof FormData ? {} : { "Content-Type": "application/json" }),
+    ...(options.body instanceof FormData
+      ? {}
+      : { "Content-Type": "application/json" }),
     ...options.headers,
   };
 
   // Add auth token if available
   const token = getToken();
   if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
+    headers["Authorization"] = `Bearer ${token}`;
   }
 
   // Build request options
   const requestOptions = {
     ...options,
-    headers
+    headers,
   };
 
   try {
     const response = await fetch(url, requestOptions);
-    
+
     // For 204 No Content responses
     if (response.status === 204) {
       return { success: true };
     }
-    
+
     const data = await response.json();
-    
+
     // Handle non-2xx status responses
     if (!response.ok) {
       throw new Error(data.message || `API error: ${response.status}`);
     }
-    
-    return data; 
 
+    return data;
   } catch (error) {
     console.error(`API request failed for ${endpoint}:`, error);
     throw error;
@@ -67,11 +68,11 @@ export async function apiRequest(endpoint, options = {}) {
  */
 export function get(endpoint, params = {}) {
   // Add query params if provided
-  const queryString = Object.keys(params).length 
-    ? '?' + new URLSearchParams(params).toString() 
-    : '';
-  
-  return apiRequest(`${endpoint}${queryString}`, { method: 'GET' });
+  const queryString = Object.keys(params).length
+    ? "?" + new URLSearchParams(params).toString()
+    : "";
+
+  return apiRequest(`${endpoint}${queryString}`, { method: "GET" });
 }
 
 /**
@@ -82,8 +83,8 @@ export function get(endpoint, params = {}) {
  */
 export function post(endpoint, data = {}) {
   return apiRequest(endpoint, {
-    method: 'POST',
-    body: JSON.stringify(data)
+    method: "POST",
+    body: JSON.stringify(data),
   });
 }
 
@@ -95,8 +96,8 @@ export function post(endpoint, data = {}) {
  */
 export function put(endpoint, data = {}) {
   return apiRequest(endpoint, {
-    method: 'PUT',
-    body: JSON.stringify(data)
+    method: "PUT",
+    body: JSON.stringify(data),
   });
 }
 
@@ -108,8 +109,8 @@ export function put(endpoint, data = {}) {
  */
 export function patch(endpoint, data = {}) {
   return apiRequest(endpoint, {
-    method: 'PATCH',
-    body: JSON.stringify(data)
+    method: "PATCH",
+    body: JSON.stringify(data),
   });
 }
 
@@ -119,44 +120,43 @@ export function patch(endpoint, data = {}) {
  * @returns {Promise} - Promise resolving to response data
  */
 export function del(endpoint) {
-  return apiRequest(endpoint, { method: 'DELETE' });
+  return apiRequest(endpoint, { method: "DELETE" });
 }
 
 export async function imageUploadRequest(endpoint, options = {}) {
-  const url = `${BASE_URL}/${endpoint.replace(/^\//, '')}`;
-  
+  const url = `${BASE_URL}/${endpoint.replace(/^\//, "")}`;
+
   // Default headers
   const headers = {};
 
   // Add auth token if available
   const token = getToken();
   if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
+    headers["Authorization"] = `Bearer ${token}`;
   }
 
   // Build request options
   const requestOptions = {
     ...options,
-    headers
+    headers,
   };
 
   try {
     const response = await fetch(url, requestOptions);
-    
+
     // For 204 No Content responses
     if (response.status === 204) {
       return { success: true };
     }
-    
+
     const data = await response.json();
-    
+
     // Handle non-2xx status responses
     if (!response.ok) {
       throw new Error(data.message || `API error: ${response.status}`);
     }
-    
-    return data; 
 
+    return data;
   } catch (error) {
     console.error(`API request failed for ${endpoint}:`, error);
     throw error;

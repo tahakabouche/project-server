@@ -5,7 +5,7 @@
 // Store the auth token in localStorage
 const TOKEN_KEY = "app_auth_token";
 const USER_DATA = "app_user";
-const BASE_URL = "http://localhost:5000/api/v1";
+const BASE_URL = "https://project-server-1-1b3z.onrender.com/api/v1";
 
 export async function login(userData) {
   try {
