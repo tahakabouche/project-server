@@ -39,7 +39,7 @@ class MyProductCard extends HTMLElement {
 
   _render(product) {
     this.productId = product._id;
-    this.image.src = `http://localhost:5000/images/${product.images[0]}`;
+    this.image.src = `/images/${product.images[0]}`;
     this.name.textContent = product.name;
     this.price.textContent = `${product.price.toLocaleString('en-US')}DA`;
     this.editProductBtn.href = `/update-product.html?id=${product._id}`;

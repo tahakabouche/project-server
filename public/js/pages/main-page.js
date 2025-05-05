@@ -5,7 +5,7 @@ import "../../components/product-card.js";
 import { get } from "../modules/api.js";
 
 // Define constants for URLs
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://project-server-1-1b3z.onrender.com";
 const IMAGE_URL = `${BASE_URL}/images`;
 
 const container = document.querySelector(".product-list-container");
