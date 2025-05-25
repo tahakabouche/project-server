@@ -14,10 +14,11 @@ errorContainer.className = "error-container";
 errorContainer.style.display = "none";
 container.parentElement.insertBefore(errorContainer, container);
 
-const backdrop = document.querySelector('.backdrop');
+const backdrop = document.querySelector(".backdrop");
 
+const params = new URLSearchParams(window.location.search);
+let pageNumber = parseInt(params.get("page") || "1");
 
-let pageNumber = 1;
 let limit = 20;
 let paginationContainer;
 
@@ -31,22 +32,22 @@ const minPriceFilter = document.getElementById("min-price");
 const maxPriceFilter = document.getElementById("max-price");
 const applyFilterBtn = document.getElementById("apply-filter-btn");
 const categoryFilters = document.querySelectorAll(".product-category-filter");
-const filterMenuBtn = document.querySelector('.filter-menu-btn');
-const closeFilterMenuBtn = document.querySelector('.close-filter-menu-btn');
+const filterMenuBtn = document.querySelector(".filter-menu-btn");
+const closeFilterMenuBtn = document.querySelector(".close-filter-menu-btn");
 
-filterMenuBtn.addEventListener('click', showFilterMenu);
-closeFilterMenuBtn.addEventListener('click', hideFilterMenu);
+filterMenuBtn.addEventListener("click", showFilterMenu);
+closeFilterMenuBtn.addEventListener("click", hideFilterMenu);
 
-function showFilterMenu(){
-  const filterMenu = document.querySelector('.menu-filter-container');
-  filterMenu.style.display = 'flex';
-  backdrop.classList.toggle('active');
+function showFilterMenu() {
+  const filterMenu = document.querySelector(".menu-filter-container");
+  filterMenu.style.display = "flex";
+  backdrop.classList.toggle("active");
 }
 
-function hideFilterMenu(){
-  const filterMenu = document.querySelector('.menu-filter-container');
-  backdrop.classList.toggle('active');
-  filterMenu.style.display = 'none';
+function hideFilterMenu() {
+  const filterMenu = document.querySelector(".menu-filter-container");
+  backdrop.classList.toggle("active");
+  filterMenu.style.display = "none";
 }
 
 applyFilterBtn.addEventListener("click", applyFilters);
@@ -126,7 +127,7 @@ const getAllProducts = async (query) => {
       window.history.pushState({}, "", `/?${query}`);
     } else {
       const query = window.location.search;
-      window.history.replaceState({}, '', '/index.html' + query);
+      window.history.replaceState({}, "", "/index.html" + query);
     }
 
     // Show loading indicator
@@ -134,12 +135,13 @@ const getAllProducts = async (query) => {
 
     const response = await get(`products${window.location.search}`);
 
-    addDocumentationInfo(response);
+    console.log(`products${window.location.search}`);
+    console.log(response);
+    
 
     // Clear the container before adding new content
     container.innerHTML = "";
-    if(paginationContainer) 
-      paginationContainer.remove();
+    if (paginationContainer) paginationContainer.remove();
 
     const products = response.data;
 
@@ -155,25 +157,34 @@ const getAllProducts = async (query) => {
       card.innerHTML = `
             <div class="product-card">
             <div class="image-wrapper">
-              <img class="product-card__image" src="${IMAGE_URL}/${product.images[0]}" alt="${product.name}" />
+              <img class="product-card__image" src="${IMAGE_URL}/${
+        product.images[0]
+      }" alt="${product.name}" />
             </div>
             <div class="product-card__content">
              <h3 class="product-card__name">${product.name}</h3>
-             <h2 class="product-card__price">${product.price.toLocaleString('en-US')}DA</h2>
+             <h2 class="product-card__price">${product.price.toLocaleString(
+               "en-US"
+             )}DA</h2>
             </div> 
             </div> 
           `;
       container.appendChild(card); // Add it to the DOM
     });
 
+    const params = new URLSearchParams(window.location.search);
+    let pageNumber = parseInt(params.get("page") || "1");
+    addDocumentationInfo(response, pageNumber);
+
     addPagination(response);
+
   } catch (error) {
     console.error("Failed to load products:", error);
     showError(`Failed to load products: ${error.message || "Unknown error"}`);
   }
 };
 
-function addPagination(response){
+function addPagination(response) {
   paginationContainer = document.createElement("div");
   paginationContainer.classList.add("pagination-container");
   paginationContainer.innerHTML = `
@@ -207,67 +218,70 @@ function addPagination(response){
 // Initialize the page
 getAllProducts();
 
-function addDocumentationInfo(response){
-  const firstDoc = document.querySelector('.first-doc');
-  const lastDoc = document.querySelector('.last-doc');
-  const docCount = document.querySelector('.doc-count');
+function addDocumentationInfo(response, pageNumber) {
+  const firstDoc = document.querySelector(".first-doc");
+  const lastDoc = document.querySelector(".last-doc");
+  const docCount = document.querySelector(".doc-count");
 
-  const firstDocument = (pageNumber - 1)*limit + 1;
-  const totalDocumnets = response.total;
-  const lastDocument = (totalDocumnets - firstDocument > limit) ? pageNumber*limit : totalDocumnets;
+  const firstDocument = (pageNumber - 1) * limit + 1;
+  const totalDocuments = response.total;
+  const lastDocument = Math.min(pageNumber * limit, firstDocument + response.count -1);
+  console.log('total document: ' + totalDocuments + ' last doc: ' + lastDocument);
+  
 
   firstDoc.innerText = `${firstDocument}`;
   lastDoc.innerText = `${lastDocument}`;
-  docCount.innerText = totalDocumnets;
+  docCount.innerText = `${totalDocuments}`;
 }
+
 // Track the currently open dropdown
 let currentOpenDropdown = null;
 
 // Add event listener for the entire document
-document.addEventListener("mouseover", function(e) {
-    // Check if we're hovering over the dropdown or any of its children
-    const dropdown = e.target.closest(".dropdown");
-    
-    if (dropdown) {
-        // We're inside a dropdown (either the button or menu)
-        if (currentOpenDropdown !== dropdown) {
-            // If there was a different dropdown open, close it
-            if (currentOpenDropdown) {
-                closeDropdown(currentOpenDropdown);
-            }
-            
-            // Open this dropdown
-            openDropdown(dropdown);
-            currentOpenDropdown = dropdown;
-        }
-    } else if (currentOpenDropdown) {
-        // We're not in any dropdown, close the current one
+document.addEventListener("mouseover", function (e) {
+  // Check if we're hovering over the dropdown or any of its children
+  const dropdown = e.target.closest(".dropdown");
+
+  if (dropdown) {
+    // We're inside a dropdown (either the button or menu)
+    if (currentOpenDropdown !== dropdown) {
+      // If there was a different dropdown open, close it
+      if (currentOpenDropdown) {
         closeDropdown(currentOpenDropdown);
-        currentOpenDropdown = null;
+      }
+
+      // Open this dropdown
+      openDropdown(dropdown);
+      currentOpenDropdown = dropdown;
     }
+  } else if (currentOpenDropdown) {
+    // We're not in any dropdown, close the current one
+    closeDropdown(currentOpenDropdown);
+    currentOpenDropdown = null;
+  }
 });
 
 // Helper function to open a dropdown
 function openDropdown(dropdown) {
-    // Add active class to the dropdown
-    dropdown.classList.add("active");
-    
-    // Rotate the SVG arrow
-    const svg = dropdown.querySelector(".dropdown-link svg");
-    if (svg) {
-        svg.style.transform = "rotate(180deg)";
-        svg.style.transition = "transform 0.2s ease";
-    }
+  // Add active class to the dropdown
+  dropdown.classList.add("active");
+
+  // Rotate the SVG arrow
+  const svg = dropdown.querySelector(".dropdown-link svg");
+  if (svg) {
+    svg.style.transform = "rotate(180deg)";
+    svg.style.transition = "transform 0.2s ease";
+  }
 }
 
 // Helper function to close a dropdown
 function closeDropdown(dropdown) {
-    // Remove active class from the dropdown
-    dropdown.classList.remove("active");
-    
-    // Reset the SVG arrow rotation
-    const svg = dropdown.querySelector(".dropdown-link svg");
-    if (svg) {
-        svg.style.transform = "rotate(0deg)";
-    }
+  // Remove active class from the dropdown
+  dropdown.classList.remove("active");
+
+  // Reset the SVG arrow rotation
+  const svg = dropdown.querySelector(".dropdown-link svg");
+  if (svg) {
+    svg.style.transform = "rotate(0deg)";
+  }
 }

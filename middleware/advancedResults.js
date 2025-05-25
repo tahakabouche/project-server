@@ -31,7 +31,7 @@ const advancedResults = (model) => async (req, res, next) => {
    }
 
    //select fields
-   if (req.query.select) {
+  if (req.query.select) {
     const fields = req.query.select.split(",").join(" ");
     query = query.select(fields);
   }
@@ -47,7 +47,8 @@ const advancedResults = (model) => async (req, res, next) => {
   const limit = parseInt(req.query.limit, 10) || 20;
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
-  const total = await model.countDocuments();
+  
+  const total = await model.countDocuments(query.getFilter());
 
   query = query.skip(startIndex).limit(limit);
 

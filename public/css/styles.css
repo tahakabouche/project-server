@@ -2244,6 +2244,7 @@ manage-shipping-container button {
 }
 
 .dropdown-menu {
+  z-index: -100;
   position: absolute;
   left: 0;
   top: calc(100% + 1.2rem);
@@ -2253,7 +2254,6 @@ manage-shipping-container button {
   opacity: 0;
   transform: translateY(-10px);
   transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
-  z-index: 50;
 }
 
 .dropdown-menu-options {
@@ -2290,6 +2290,7 @@ manage-shipping-container button {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+  z-index: 100;
 }
 
 .orders-action-td {
