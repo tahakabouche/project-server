@@ -2,10 +2,10 @@ import "../../components/product-card.js";
 import "../../components/side-bar.js";
 import { get } from "../modules/api.js";
 
-const filterDialog = document.getElementById('filter-dialog');
-const filterBtn = document.getElementById('filter-dashboard-btn');
+const filterDialog = document.getElementById("filter-dialog");
+const filterBtn = document.getElementById("filter-dashboard-btn");
 
-filterBtn.addEventListener('click', filterDialog.showModal);
+filterBtn.addEventListener("click", filterDialog.showModal);
 
 let paginationContainer;
 
@@ -15,7 +15,8 @@ errorContainer.className = "error-container";
 errorContainer.style.display = "none";
 container.parentElement.insertBefore(errorContainer, container);
 
-let pageNumber = 1;
+const params = new URLSearchParams(window.location.search);
+let pageNumber = parseInt(params.get("page") || "1");
 let limit = 20;
 
 const getAllProducts = async (query) => {
@@ -30,7 +31,9 @@ const getAllProducts = async (query) => {
 
     const response = await get(`products${window.location.search}`);
 
-    addDocumentationInfo(response);
+    const params = new URLSearchParams(window.location.search);
+    let pageNumber = parseInt(params.get("page") || "1");
+    addDocumentationInfo(response, pageNumber);
 
     container.innerHTML = "";
 
@@ -48,8 +51,7 @@ const getAllProducts = async (query) => {
       container.appendChild(card); // Add it to the DOM
     });
 
-    if(paginationContainer) 
-      paginationContainer.remove();
+    if (paginationContainer) paginationContainer.remove();
 
     addPagination(response);
   } catch (error) {
@@ -86,8 +88,7 @@ function hideError() {
   errorContainer.style.display = "none";
 }
 
-
-function addPagination(response){
+function addPagination(response) {
   paginationContainer = document.createElement("div");
   paginationContainer.classList.add("pagination-container");
   paginationContainer.innerHTML = `
@@ -120,17 +121,22 @@ function addPagination(response){
 
 getAllProducts();
 
-function addDocumentationInfo(response){
+function addDocumentationInfo(response, pageNumber) {
+  const firstDoc = document.querySelector(".first-doc");
+  const lastDoc = document.querySelector(".last-doc");
+  const docCount = document.querySelector(".doc-count");
 
-  const firstDoc = document.querySelector('.first-doc');
-  const lastDoc = document.querySelector('.last-doc');
-  const docCount = document.querySelector('.doc-count');
-
-  const firstDocument = (pageNumber - 1)*limit + 1;
-  const totalDocumnets = response.total;
-  const lastDocument = (totalDocumnets - firstDocument > limit) ? pageNumber*limit : totalDocumnets;
+  const firstDocument = (pageNumber - 1) * limit + 1;
+  const totalDocuments = response.total;
+  const lastDocument = Math.min(
+    pageNumber * limit,
+    firstDocument + response.count - 1
+  );
+  console.log(
+    "total document: " + totalDocuments + " last doc: " + lastDocument
+  );
 
   firstDoc.innerText = `${firstDocument}`;
   lastDoc.innerText = `${lastDocument}`;
-  docCount.innerText = totalDocumnets;
+  docCount.innerText = `${totalDocuments}`;
 }

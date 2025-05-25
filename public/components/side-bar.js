@@ -1,5 +1,4 @@
 import { isAuthenticated, logout, getUserData } from "../js/modules/auth.js";
-import { get } from "../js/modules/api.js";
 
 class MySideBar extends HTMLElement {
   constructor() {
@@ -98,7 +97,7 @@ class MySideBar extends HTMLElement {
         <li>
          
             <button id="logout-btn">
-              <a href=""
+              <a
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="24px"
@@ -128,10 +127,7 @@ class MySideBar extends HTMLElement {
     this.sideBar = document.querySelector("#sidebar");
     this.logoutBtn = document.querySelector("#logout-btn");
 
-    this.logoutBtn.addEventListener("click", () => {
-      logout();
-      window.location.href = '';
-    });
+    this.logoutBtn.addEventListener("click", logout);
 
     this.sideBarToggleBtn.addEventListener("click", () => this.toggleSideBar());
 
@@ -164,20 +160,19 @@ class MySideBar extends HTMLElement {
 
     if (window.location.pathname === "/manage-shipping.html")
       this.manageShippingLink.classList.add("active");
-
-    
   }
 
-  removeUnauthorizedLinks(){
+  removeUnauthorizedLinks() {
     const user = getUserData();
     console.log(user);
-    
-    if(user.role !== 'admin'){
-      this.manageOrdersLink.remove();
-      this.manageProductsLink.remove();
-      this.manageUsersLink.remove();
-      this.manageShippingLink.remove()
-    }
+    if (isAuthenticated()) {
+      if (user.role !== "admin") {
+        this.manageOrdersLink.remove();
+        this.manageProductsLink.remove();
+        this.manageUsersLink.remove();
+        this.manageShippingLink.remove();
+      }
+    } 
   }
 
   toggleSideBar() {

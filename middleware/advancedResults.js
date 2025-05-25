@@ -4,7 +4,7 @@ const advancedResults = (model) => async (req, res, next) => {
 
   const removeFields = ["select", "sort", "limit", "page", "size"];
   removeFields.forEach((param) => delete reqQuery[param]);
-  
+
   let queryStr = JSON.stringify(reqQuery);
 
   queryStr = queryStr.replace(
@@ -13,24 +13,24 @@ const advancedResults = (model) => async (req, res, next) => {
   );
 
   query = model.find(JSON.parse(queryStr));
-  
-   //size filtering
-   if (req.query.size) {
+
+  //size filtering
+  if (req.query.size) {
     const sizes = req.query.size.split(",");
-    
+
     query = query.find({
       sizes: {
-        $all: sizes.map(size => ({
+        $all: sizes.map((size) => ({
           $elemMatch: {
             size: size,
-            quantity: { $gte: 1 }
-          }
-        }))
-      }
+            quantity: { $gte: 1 },
+          },
+        })),
+      },
     });
-   }
+  }
 
-   //select fields
+  //select fields
   if (req.query.select) {
     const fields = req.query.select.split(",").join(" ");
     query = query.select(fields);
@@ -41,13 +41,13 @@ const advancedResults = (model) => async (req, res, next) => {
     let sortBy = req.query.sort.split(",").join(" ");
     query = query.sort(sortBy);
   }
-  
+
   //pagination
   const page = parseInt(req.query.page, 10) || 1;
   const limit = parseInt(req.query.limit, 10) || 20;
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
-  
+
   const total = await model.countDocuments(query.getFilter());
 
   query = query.skip(startIndex).limit(limit);

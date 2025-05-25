@@ -137,7 +137,6 @@ const getAllProducts = async (query) => {
 
     console.log(`products${window.location.search}`);
     console.log(response);
-    
 
     // Clear the container before adding new content
     container.innerHTML = "";
@@ -177,7 +176,6 @@ const getAllProducts = async (query) => {
     addDocumentationInfo(response, pageNumber);
 
     addPagination(response);
-
   } catch (error) {
     console.error("Failed to load products:", error);
     showError(`Failed to load products: ${error.message || "Unknown error"}`);
@@ -225,9 +223,13 @@ function addDocumentationInfo(response, pageNumber) {
 
   const firstDocument = (pageNumber - 1) * limit + 1;
   const totalDocuments = response.total;
-  const lastDocument = Math.min(pageNumber * limit, firstDocument + response.count -1);
-  console.log('total document: ' + totalDocuments + ' last doc: ' + lastDocument);
-  
+  const lastDocument = Math.min(
+    pageNumber * limit,
+    firstDocument + response.count - 1
+  );
+  console.log(
+    "total document: " + totalDocuments + " last doc: " + lastDocument
+  );
 
   firstDoc.innerText = `${firstDocument}`;
   lastDoc.innerText = `${lastDocument}`;

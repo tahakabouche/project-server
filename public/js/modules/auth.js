@@ -59,6 +59,7 @@ export async function register(userData) {
 export function logout() {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_DATA);
+  window.location.href = "/";
 }
 
 export async function getCurrentUser() {
